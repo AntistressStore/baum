@@ -18,15 +18,15 @@ class Builder
      */
     protected $bounds = [];
 
+    protected array $rebuilds = [];
+
+    protected array $rebuildsAttributes = [];
+
     /**
      * Create a new \Baum\SetBuilder class instance.
      *
      * @param \Baum\Node $node
      */
-    protected array $rebuilds = [];
-
-    protected array $rebuildsAttributes = [];
-
     public function __construct($node)
     {
         $this->node = $node;
@@ -34,6 +34,15 @@ class Builder
 
     protected function setRebuildsAttributes(): array
     {
+        // $columns = Schema::getColumns($this->node->getTable());
+        // $a = get_class_methods($this);
+
+        // $b = get_class_methods($this->node);
+
+        // $c = $this->node->getTable();
+
+        // $columns = $this->node->getQuery()->getColumns(/* $this->node->getTable() */);
+
         $columns = $this->node->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->node->getTable());
 
         $notNullableColumns = \array_keys(
